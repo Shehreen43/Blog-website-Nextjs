@@ -9,6 +9,8 @@ export default defineConfig({
 
   projectId: '6xe84oec',
   dataset: 'production',
+  apiVersion: '2024-12-27',
+  useCdn: process.env.NODE_ENV === 'production',
 
   plugins: [structureTool(), visionTool()],
 
