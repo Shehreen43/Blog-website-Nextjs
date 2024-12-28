@@ -1,4 +1,4 @@
-import { fullBlog } from "@/app/lib/interface";
+import { FullBlog } from "@/app/lib/interface";
 import client, { urlFor } from "@/app/lib/sanity";
 import Image from "next/image";
 import { PortableText } from "@portabletext/react";
@@ -24,7 +24,7 @@ async function getData(slug: string) {
 }
 
 export default async function Page({ params }: { params: Params }) {
-  const data: fullBlog = await getData(params.slug);
+  const data: FullBlog = await getData(params.slug);
 
   return (
     <div className="mt-8">

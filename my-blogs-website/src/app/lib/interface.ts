@@ -1,13 +1,17 @@
-export interface simpleBlogCard {
+export interface SimpleBlogCard {
     title: string;
     smallDescription: string;
     currentSlug: string;
-    titleImage: any;
-};
+    titleImage: string; // or use 'URL' if it's a URL string
+  }
+  
+  import { PortableTextBlock } from '@portabletext/types';
 
-export interface fullBlog {
+  export interface FullBlog {
     currentSlug: string;
     title: string;
-    content: any;
-    titleImage: any;
-};
+    content: PortableTextBlock[]; // Rich text content as an array of blocks
+    titleImage: string;
+  }
+  
+  
