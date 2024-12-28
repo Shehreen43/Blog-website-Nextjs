@@ -42,7 +42,7 @@ export default async function Home() {
                 alt={post.title}
                 width={500}
                 height={500}
-                className="rounded-t-lg h-[200px] object-cover"
+                className="rounded-t-lg h-[200px] w-full object-cover"
               />
               <CardContent className="mt-5">
                 <h2 className="text-lg line-clamp-2 font-bold">{post.title}</h2>
