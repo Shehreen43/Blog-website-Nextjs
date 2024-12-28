@@ -7,6 +7,8 @@ type Params = {
   slug: string;
 };
 
+export const revalidate = 30;
+
 async function getData(slug: string) {
   const query = `
     *[_type == "blog" && slug.current == '${slug}'] {
@@ -17,8 +19,8 @@ async function getData(slug: string) {
     }[0]`;
 
   const data = await client.fetch(query);
-
-  return data;
+ 
+  return data
 }
 
 export default async function Page({ params }: { params: Params }) {
@@ -45,7 +47,7 @@ export default async function Page({ params }: { params: Params }) {
         className="rounded-lg mt-8 border"
       />
 
-      <div className="mt-16 prose prose-orange prose-lg dark:prose-invert prose-li:marker:text-orange-400 prose-a:text-orange-300">
+      <div className="mt-16 prose prose-lg dark:prose-invert prose-li:marker:text-orange-400 ">
         
           <PortableText value={data.content} />
       

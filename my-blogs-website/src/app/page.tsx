@@ -5,6 +5,8 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
+export const revalidate = 30;
+
 async function getData() {
   const query = `
     *[_type == 'blog'] | order(_createdAt desc) {
@@ -19,8 +21,6 @@ async function getData() {
     const data = await client.fetch(query);
     console.log(data);
     return data;
-   
-    
   } catch (error) {
     console.error("Error fetching data from Sanity:", error);
     return [];
@@ -36,7 +36,7 @@ export default async function Home() {
         {data.map((post, id) => {
           console.log(id, post);
           return (
-            <Card key={id}>
+            <Card key={id} className="border border-gray-200 dark:border-gray-700 rounded-lg">
               <Image
                 src={urlFor(post.titleImage).url()}
                 alt={post.title}
@@ -45,15 +45,12 @@ export default async function Home() {
                 className="rounded-t-lg h-[200px] w-full object-cover"
               />
               <CardContent className="mt-5">
-                <h2 className="text-lg line-clamp-2 font-bold">{post.title}</h2>
+                <h2 className="text-lg line-clamp-2 font-bold text-orange-600">{post.title}</h2>
                 <p className="text-sm mt-2 text-gray-600 dark:text-gray-300">{post.smallDescription}</p>
-                <Button asChild className="w-full mt-2 bg-orange-600">
+                <Button asChild className="w-full mt-2 bg-orange-500 hover:bg-orange-600 text-white">
                   <Link href={`/blog/${post.currentSlug}`}>Read More</Link>
                 </Button>
-             
               </CardContent>
-              {/* <h2 className="text-xl font-semibold mt-2">{post.title}</h2> */}
-              {/* <p className="text-gray-600">{post.smallDescription}</p> */}
             </Card>
           );
         })}

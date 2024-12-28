@@ -16,7 +16,9 @@ export default function Navbar() {
         disableTransitionOnChange
       >
         {" "}
-        <ModeToggle />
+       <div className="text-orange-400">
+       <ModeToggle />
+       </div>
       </ThemeProvider>
     </nav>
   );
