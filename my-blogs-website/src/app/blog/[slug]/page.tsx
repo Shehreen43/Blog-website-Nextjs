@@ -11,19 +11,22 @@ export const revalidate = 30;
 
 async function getData(slug: string) {
   const query = `
-    *[_type == "blog" && slug.current == '${slug}'] {
+    *[_type == "blog" && slug.current == $slug] {
       "currentSlug" : slug.current,
       title,
       content,
       titleImage
     }[0]`;
 
-  const data = await client.fetch(query);
- 
-  return data
+  const data = await client.fetch(query, { slug });
+  return data;
 }
 
-export default async function Page({ params }: { params: Params }) {
+export default async function Page({
+  params,
+}: {
+  params: Params;
+}) {
   const data: FullBlog = await getData(params.slug);
 
   return (
@@ -47,10 +50,8 @@ export default async function Page({ params }: { params: Params }) {
         className="rounded-lg mt-8 border"
       />
 
-      <div className="mt-16 prose prose-lg dark:prose-invert prose-li:marker:text-orange-400 ">
-        
-          <PortableText value={data.content} />
-      
+      <div className="mt-16 prose prose-lg dark:prose-invert prose-li:marker:text-orange-400">
+        <PortableText value={data.content} />
       </div>
     </div>
   );
