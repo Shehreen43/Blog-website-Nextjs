@@ -2,7 +2,6 @@ import { FullBlog } from "@/app/lib/interface";
 import client, { urlFor } from "@/app/lib/sanity";
 import Image from "next/image";
 import { PortableText } from "@portabletext/react";
-import { promises } from "dns";
 
 type Params = {
   slug: string;
@@ -12,23 +11,18 @@ export const revalidate = 30;
 
 async function getData(slug: string) {
   const query = `
-    *[_type == "blog" && slug.current == '${slug}'] {
-      "currentSlug" : slug.current,
+    *[_type == "blog" && slug.current == $slug] {
+      "currentSlug": slug.current,
       title,
       content,
       titleImage
     }[0]`;
-
-  const data = await client.fetch(query);
+  const data = await client.fetch(query, { slug });
   return data;
 }
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{slug:string}>
-}) {
-  const data: FullBlog = await getData((await params).slug);
+export default async function Page({ params }: { params: { slug: string } }) {
+  const data: FullBlog = await getData(params.slug);
 
   return (
     <div className="mt-8">
@@ -46,7 +40,7 @@ export default async function Page({
         src={urlFor(data.titleImage).url()}
         width={800}
         height={800}
-        alt={`${data.titleImage}`}
+        alt={`Image for ${data.title}`}
         priority
         className="rounded-lg mt-8 border"
       />
