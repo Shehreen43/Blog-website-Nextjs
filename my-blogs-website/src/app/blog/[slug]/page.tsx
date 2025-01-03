@@ -2,6 +2,7 @@ import { FullBlog } from "@/app/lib/interface";
 import client, { urlFor } from "@/app/lib/sanity";
 import Image from "next/image";
 import { PortableText } from "@portabletext/react";
+import { promises } from "dns";
 
 type Params = {
   slug: string;
@@ -25,9 +26,9 @@ async function getData(slug: string) {
 export default async function Page({
   params,
 }: {
-  params: Params;
+  params: Promise<{slug:string}>
 }) {
-  const data: FullBlog = await getData(params.slug);
+  const data: FullBlog = await getData((await params).slug);
 
   return (
     <div className="mt-8">
