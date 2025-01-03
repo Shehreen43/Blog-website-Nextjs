@@ -3,10 +3,6 @@ import client, { urlFor } from "@/app/lib/sanity";
 import Image from "next/image";
 import { PortableText } from "@portabletext/react";
 
-type Params = {
-  slug: string;
-};
-
 export const revalidate = 30;
 
 async function getData(slug: string) {
