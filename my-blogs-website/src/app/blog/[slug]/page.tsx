@@ -5,9 +5,14 @@ import { PortableText } from "@portabletext/react";
 
 export const revalidate = 30;
 
+interface Props { params: { slug: string } }
+
+
+// *[_type == "blog" && slug.current == $slug] {
 async function getData(slug: string) {
   const query = `
-    *[_type == "blog" && slug.current == $slug] {
+  
+    *[_type == "blog" && slug.current == ${slug}] {
       "currentSlug": slug.current,
       title,
       content,
@@ -17,7 +22,8 @@ async function getData(slug: string) {
   return data;
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
+// export default async function Page({ params }: { params: { slug: string } }) {
+export default async function Page({ params }: Props ) {
   const data: FullBlog = await getData(params.slug);
 
   return (
