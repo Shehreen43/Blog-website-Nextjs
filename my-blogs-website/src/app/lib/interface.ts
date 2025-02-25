@@ -13,5 +13,12 @@ export interface SimpleBlogCard {
     content: PortableTextBlock[]; // Rich text content as an array of blocks
     titleImage: string;
   }
+
+  export interface fullBlog {
+    currentSlug: string;
+    title: string;
+    content: any;
+    titleImage: any;
+};
   
   
